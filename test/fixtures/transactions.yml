@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sender_amount: 9.99
+  reciever_amount: 9.99
+  sender_currency_type: 
+  reciever_currency_type: 
+  transaction_status: 
+  sender: one
+  reciever: one
+
+two:
+  sender_amount: 9.99
+  reciever_amount: 9.99
+  sender_currency_type: 
+  reciever_currency_type: 
+  transaction_status: 
+  sender: two
+  reciever: two
