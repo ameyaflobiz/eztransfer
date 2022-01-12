@@ -37,6 +37,9 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_model_otp (2.3.1)
+      activemodel
+      rotp (~> 6.2.0)
     activejob (6.0.4.4)
       activesupport (= 6.0.4.4)
       globalid (>= 0.3.6)
@@ -56,18 +59,23 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
+    bcrypt (3.1.16)
     bootsnap (1.9.4)
       msgpack (~> 1.0)
     builder (3.2.4)
     byebug (11.1.3)
+    chronic (0.10.2)
     concurrent-ruby (1.1.9)
+    connection_pool (2.2.5)
     crass (1.0.6)
     erubi (1.10.0)
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    hirb (0.7.3)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
+    jwt (2.3.0)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -82,6 +90,8 @@ GEM
     mini_portile2 (2.6.1)
     minitest (5.15.0)
     msgpack (1.4.2)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
@@ -91,6 +101,10 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
+    rack-protection (2.1.0)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.0.4.4)
@@ -123,6 +137,18 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.5.1)
+    rotp (6.2.0)
+    ruby2_keywords (0.0.5)
+    sidekiq (6.3.1)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
+    sinatra (2.1.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
+      tilt (~> 2.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -136,26 +162,38 @@ GEM
       sprockets (>= 3.0.0)
     thor (1.2.1)
     thread_safe (0.3.6)
+    tilt (2.0.10)
     tzinfo (1.2.9)
       thread_safe (~> 0.1)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
     zeitwerk (2.5.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_otp
+  bcrypt
   bootsnap (>= 1.4.2)
   byebug
+  hirb
+  jwt
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
+  rack-cors
   rails (~> 6.0.4, >= 6.0.4.4)
+  redis
+  sidekiq
+  sinatra
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
+  whenever
 
 RUBY VERSION
    ruby 2.5.6p201
