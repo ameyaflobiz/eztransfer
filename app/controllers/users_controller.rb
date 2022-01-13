@@ -6,13 +6,25 @@ class UsersController < ApplicationController
         render json: @users, status: :ok
     end
 
-    def show
-        render json: @user, status: :ok
+    def create
+        @user= User.new(user_params)
+        if @user.save!
+            token= JwtService.encode({user_id:@user.id})
+            render json: {user:@user, token: token}, status: :created
+        else
+            render json: {errors: @user.errors.full_messages}, status: :unprocessable_entity
+        end
+            
+    end
+
+    def destroy
+        @user.destroy!
     end
 
     def getOTP
         render json: {otp: @user.otp_code , username: @user.username}
     end
+
     def login
 
         if @user && @user.authenticate(params[:password]) && @user.authenticate_otp(params[:otp].to_s,drift:60)
@@ -22,15 +34,9 @@ class UsersController < ApplicationController
             render json: {error: "incorrect OTP"}, status: :unauthorized
         end
     end
-    def create
-        @user= User.new(user_params)
-        if @user.save
-            token= JwtService.encode({user_id:@user.id})
-            render json: {user:@user, token: token}, status: :created
-        else
-            render json: {errors: @user.errors.full_messages}, status: :unprocessable_entity
-        end
-            
+
+    def show
+        render json: @user, status: :ok
     end
 
     def update
@@ -40,9 +46,7 @@ class UsersController < ApplicationController
         end
     end
 
-    def destroy
-        @user.destroy!
-    end
+
     private
 
     def find_user

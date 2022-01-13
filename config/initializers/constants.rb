@@ -1,0 +1,1 @@
+CURRENCIES = { inr: 0, usd: 1, yen: 2, euro: 3, chf: 4 }
