@@ -2,6 +2,7 @@ class UsersController < ApplicationController
     before_action :authorize_request, except: [:create,:login,:index,:getOTP]
     before_action :find_user, only: [:login,:getOTP]
     def index
+        # raise Error::Exceptions::NotVisibleException
         @users=User.all
         render json: @users, status: :ok
     end

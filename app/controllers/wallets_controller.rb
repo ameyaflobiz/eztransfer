@@ -2,7 +2,7 @@ class WalletsController < ApplicationController
     before_action :authorize_request
 
     def add_money_to_wallet
-        # render json: params
+        # render json: @user.username
         wallet_type= CURRENCIES[params[:currency_type].to_sym]
         amount=params[:amount]
         @wallet= Wallet.find_or_create_by(user_id: @user.id,currency_type: wallet_type)

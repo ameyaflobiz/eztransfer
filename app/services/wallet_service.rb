@@ -10,5 +10,6 @@ class WalletService
     end
 
     def self.transfer
+        
     end
 end
