@@ -14,14 +14,15 @@ class WalletService
         wallet_type_sender = CURRENCIES[sender_currency_type.to_sym]
         wallet_type_reciever = CURRENCIES[reciever_currency_type.to_sym]
 
-        sender_wallet= Wallet.fetch_wallet( sender_id, wallet_type_sender )
-        reciever_wallet= Wallet.fetch_wallet(reciever_id, wallet_type_reciever )
-        sender_amount= sender_amount.to_d.round(AMOUNT_PRECISION)
+        sender_wallet = Wallet.fetch_wallet( sender_id, wallet_type_sender )
+        reciever_wallet = Wallet.fetch_wallet(reciever_id, wallet_type_reciever )
+        sender_amount = sender_amount.to_d.round(AMOUNT_PRECISION)
+        
         ActiveRecord::Base.transaction do
             if sender_amount <= sender_wallet.wallet_amount
                 # fetch conversion rate from redis (make a service)
                 reciever_amount = ConversionService.convert(sender_currency_type,reciever_currency_type,sender_amount)
-                reciever_amount= reciever_amount.round(AMOUNT_PRECISION)
+                reciever_amount = reciever_amount.round(AMOUNT_PRECISION)
                 
                 # After this gets done, update wallet of both parties
 
