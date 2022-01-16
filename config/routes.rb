@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   post "/login",:to => "users#login"
   resources :users 
   resources :wallets ,except: [:create]
+  post "/transfer_money", :to => "wallets#transfer_money"
   post "/add_money_to_wallet",:to => "wallets#add_money_to_wallet"
 
 end

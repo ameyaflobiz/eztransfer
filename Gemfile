@@ -46,6 +46,8 @@ gem 'rack-cors'
 gem 'jwt'
 gem 'active_model_otp'
 gem 'redis'
+gem 'redis-rb'
 gem 'sidekiq'
 gem 'sinatra'
 gem 'whenever', require: false
+gem "httparty"
