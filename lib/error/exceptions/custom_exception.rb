@@ -1,14 +1,13 @@
-module Error::Exceptions
-    class CustomException < StandardError
 
-        attr_reader :status, :error, :message
+class Error::Exceptions::CustomException < StandardError
 
-        def initialize( _error = nil, _status = nil, _message = nil )
-            @error = _error || 422
-            @status = _status || :unprocessable_entity
-            @message = _message || "Something went wrong"
-        end
+    attr_reader :status, :error, :message
 
-        
+    def initialize( _error = nil, _status = nil, _message = nil )
+        @error = _error || 422
+        @status = _status || :unprocessable_entity
+        @message = _message || "Something went wrong"
     end
+
+    
 end

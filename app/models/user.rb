@@ -2,7 +2,7 @@ class User < ApplicationRecord
     has_secure_password
     has_one_time_password
 
-    validates :username, presence: true
+    validates :username, presence: true , uniqueness: true
     validates :password, length: { in: 6..20 }
     
     has_many :transactions,->(user) { unscope(where: :user_id).
