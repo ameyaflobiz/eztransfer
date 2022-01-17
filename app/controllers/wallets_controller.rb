@@ -2,32 +2,32 @@ class WalletsController < ApplicationController
     before_action :authorize_request
 
     def add_money_to_wallet
-        # render json: @user.username
-        wallet_type = CURRENCIES[params[:currency_type].to_sym]
+    
+        
+        wallet = Wallet.fetch_wallet(@user.id, params[:currency_type])
         amount = params[:amount]
-        @wallet = Wallet.find_or_create_by(user_id: @user.id,currency_type: wallet_type)
-        @wallet = WalletService.add_money(@wallet.id,amount)
+       
+        @wallet = WalletService.new().add_money(wallet.id,amount)
+
         render json: {message:"Wallet amount was successfully added",wallet: @wallet.wallet_amount, amount: params[:amount], wallet_type: params[:currency_type] }
     end
 
     def transfer_money
-        # Call your service here
-        wallet_type_sender = CURRENCIES[params[:sender_currency_type].to_sym]
-        wallet_type_reciever = CURRENCIES[params[:reciever_currency_type].to_sym]
+        # Call your service here no need
 
-        WalletService.transfer(
-                               params[:sender_id],
-                               params[:reciever_id],
-                               params[:sender_currency_type],
-                               params[:reciever_currency_type],
-                               params[:sender_amount]
-                              )
 
-        sender_wallet = Wallet.fetch_wallet( params[:sender_id], wallet_type_sender )
-        reciever_wallet = Wallet.fetch_wallet( params[:reciever_id], wallet_type_reciever )
+        @transaction = WalletService.new().transfer_money(transfer_params)
 
-        render json: { message: "Transaction complete" sender_wallet: sender_wallet, reciever_wallet: reciever_wallet }
+        sender_wallet = Wallet.find_by(user_id: params[:sender_id], currency_type: params[:sender_currency_type] )
+        reciever_wallet = Wallet.find_by(user_id: params[:reciever_id], currency_type: params[:reciever_currency_type] )
+        
+        render json: { transaction: @transaction }
     end
 
+    private
+
+    def transfer_params
+        params.permit(:sender_id, :reciever_id, :sender_currency_type, :reciever_currency_type, :sender_amount)
+    end
     
 end

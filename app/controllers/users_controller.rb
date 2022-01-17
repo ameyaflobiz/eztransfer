@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-    before_action :authorize_request, except: [:create,:login,:index,:getOTP]
-    before_action :find_user, only: [:login,:getOTP]
+    before_action :authorize_request, except: [:create,:login,:index,:get_otp]
+    before_action :find_user, only: [:login,:get_otp]
     def index
         # raise Error::Exceptions::NotVisibleException
         @users=User.all
@@ -12,8 +12,6 @@ class UsersController < ApplicationController
         if @user.save!
             token= JwtService.encode({user_id:@user.id})
             render json: {user:@user, token: token}, status: :created
-        else
-            render json: {errors: @user.errors.full_messages}, status: :unprocessable_entity
         end
             
     end
@@ -22,7 +20,7 @@ class UsersController < ApplicationController
         @user.destroy!
     end
 
-    def getOTP
+    def get_otp
         render json: {otp: @user.otp_code , username: @user.username}
     end
 

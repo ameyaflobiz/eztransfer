@@ -1,6 +1,6 @@
 class ConversionService
 
-    def self.convert( base_curr, target_curr, sender_amount )
+    def convert( base_curr, target_curr, sender_amount )
         # Idhar redis bulaayenge
         # Since base here is EURO, toh BASE --> EURO --> TARGET
         base_curr = base_curr.downcase
