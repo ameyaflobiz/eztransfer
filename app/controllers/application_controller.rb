@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
     include Error::ErrorHandler
-    
+    before_action :authorize_request
+    attr_reader :user
     def authorize_request
         auth_header= request.headers['Authorization']
         token= auth_header.split(' ')[1]
