@@ -3,17 +3,44 @@ namespace :cron_tasks do
     
     task fetch_new_rates: :environment do
         puts "idhar redis aayega"
-        response= RestClient.get("http://api.exchangeratesapi.io/v1/latest?access_key=ed8c3664907e4efd86e2a0f089be1e87&symbols=INR,USD,JPY,EUR,CHF&format=1").to_json
-        response_json= JSON.parse(response)
+        
+        begin
+            response = RestClient.get("http://api.exchangeratesapi.io/v1/latest?access_key=ed8c3664907e4efd86e2a0f089be1e87&symbols=INR,USD,JPY,EUR,CHF&format=1")
 
-        # use hashset and also rescue exception if api fails
-        REDIS.set("inr", response_json["rates"]["INR"])
-        REDIS.set("usd", response_json["rates"]["USD"])
-        REDIS.set("yen", response_json["rates"]["JPY"])
-        REDIS.set("eur", response_json["rates"]["EUR"])
-        REDIS.set("chf", response_json["rates"]["CHF"])
+            response = response.body
+            response_json= JSON.parse(response)
 
-        puts response_json
+            # used hashset and also rescue exception if api fails
+
+            REDIS.hset("rates",{
+                        "inr" => response_json["rates"]["INR"],
+                        "usd" => response_json["rates"]["USD"],
+                        "yen" => response_json["rates"]["JPY"],
+                        "eur" => response_json["rates"]["EUR"],
+                        "chf" => response_json["rates"]["CHF"]
+                    }   
+                      )
+
+            puts response_json
+            puts "API CALL WAS SUCCESSFUL AND REDIS IS UPDATED"
+
+        rescue Exception => exception
+            if exception.is_a?(RestClient::ExceptionWithResponse)
+                puts "RESTCLIENT EXCEPTION RESCUED WITH DETAILS"
+
+            elsif exception.class==SocketError
+                puts "SITE CAN'T BE REACHED"
+               
+            else
+                puts "UNCHECKED EXCEPTION"
+                
+            end
+            puts exception
+        
+        end
+        
+
+
         
     end
 

@@ -6,8 +6,8 @@ class ConversionService
         base_curr = base_curr.downcase
         target_curr = target_curr.downcase
         
-        euro_to_base_curr = REDIS.get(base_curr).to_d
-        euro_to_target_curr = REDIS.get(target_curr).to_d
+        euro_to_base_curr = REDIS.hget("rates",base_curr).to_d
+        euro_to_target_curr = REDIS.hget("rates",target_curr).to_d
         
         sender_amount_in_euro = sender_amount / euro_to_base_curr
         
