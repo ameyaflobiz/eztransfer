@@ -56,7 +56,8 @@ class WalletService
             end
         end
 
-        # SIDEKIQ NOTIFY 
-
+        # SIDEKIQ NOTIFY
+        NotifyWorker.perform_async(@transaction.id,@transaction.transaction_status)
+        @transaction
     end
 end
