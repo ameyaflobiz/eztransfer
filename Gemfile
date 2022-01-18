@@ -50,4 +50,4 @@ gem 'redis-rb'
 gem 'sidekiq'
 gem 'sinatra'
 gem 'whenever', require: false
-gem "httparty"
+gem "rest-client"
