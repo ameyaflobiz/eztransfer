@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-    before_action :authorize_request, except: [:create,:login,:index,:get_otp]
+    skip_before_action :authorize_request, only: [:create,:login,:index,:get_otp]
     before_action :find_user, only: [:login,:get_otp]
+
     def index
         # raise Error::Exceptions::NotVisibleException
         @users=User.all
@@ -38,18 +39,11 @@ class UsersController < ApplicationController
         render json: @user, status: :ok
     end
 
-    def update
-
-        unless @user.update(user_params)
-            render json:{ errors: @user.errors.full_messages}, status: :unprocessable_entity
-        end
-    end
-
 
     private
 
     def find_user
-        @user= User.find_by_username(params[:username])
+        @user= User.find(params[:id])
     rescue ActiveRecord::RecordNotFound
         render json:{ errors: 'User not found'}, status: :not_found
     end

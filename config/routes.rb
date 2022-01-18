@@ -3,12 +3,23 @@ Rails.application.routes.draw do
   require "sidekiq/web"
   mount Sidekiq::Web=>"/sidekiq"
 
-  post "/get_otp",:to => "users#get_otp"
-  post "/login",:to => "users#login"
-  resources :users 
-  resources :wallets ,except: [:create,:update]
 
-  post "/transfer_money", :to => "wallets#transfer_money"
-  post "/add_money_to_wallet",:to => "wallets#add_money_to_wallet"
+  resources :users do 
+
+      member do
+        post :get_otp
+        post :login
+      end
+
+  end
+  resources :wallets ,except: [:create,:update] do 
+    
+    collection do
+      post :transfer_money
+      post :add_money_to_wallet
+    end
+
+  end
+
 
 end

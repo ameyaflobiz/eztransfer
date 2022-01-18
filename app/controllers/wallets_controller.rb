@@ -1,5 +1,4 @@
 class WalletsController < ApplicationController
-    before_action :authorize_request
 
     def add_money_to_wallet
     
