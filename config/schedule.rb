@@ -20,9 +20,9 @@ set :output, "log/cron.log"
 
 # Learn more: http://github.com/javan/whenever
 
-# every :day, at: "12:00 AM" do
-#     rake "cron_tasks:fetch_new_rates"
-# end
-every 1.minute do
+every :day, at: "12:00 AM" do
     rake "cron_tasks:fetch_new_rates"
 end
+# every 1.minute do
+#     rake "cron_tasks:fetch_new_rates"
+# end
