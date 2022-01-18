@@ -32,7 +32,7 @@ class WalletService
 
             if sender_amount <= sender_wallet.wallet_amount
                       
-                # After this gets done, update wallet of both parties (use optimistic locking here)
+                # After this gets done, update wallet of both parties (used optimistic locking here)
                 
                 sender_wallet.update!(wallet_amount: ( sender_wallet.wallet_amount-sender_amount ))
                 reciever_wallet.update!(wallet_amount: ( reciever_wallet.wallet_amount+reciever_amount ))
