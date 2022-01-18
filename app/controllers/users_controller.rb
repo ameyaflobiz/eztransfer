@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     before_action :find_user, only: [:login,:get_otp]
 
     def index
-        # raise Error::Exceptions::NotVisibleException
+        raise ActiveRecord::RecordNotFound
         @users=User.all
         render json: @users, status: :ok
     end
