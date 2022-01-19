@@ -51,3 +51,4 @@ gem 'sidekiq'
 gem 'sinatra'
 gem 'whenever', require: false
 gem "rest-client"
+gem 'config'
