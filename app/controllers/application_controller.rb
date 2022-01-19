@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
         auth_header= request.headers['Authorization']
         token= auth_header.split(' ')[1]
         begin
-            @decoded= JwtService.decode(token)
+            @decoded= JwtService.new().decode(token)
             @user= User.find(@decoded[0]['user_id'])
         
         rescue ActiveRecord::RecordNotFound => error
