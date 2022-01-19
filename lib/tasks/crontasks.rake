@@ -5,7 +5,7 @@ namespace :cron_tasks do
         puts "idhar redis aayega"
         
         begin
-            response = RestClient.get("http://api.exchangeratesapi.io/v1/latest?access_key=ed8c3664907e4efd86e2a0f089be1e87&symbols=INR,USD,JPY,EUR,CHF&format=1")
+            response = RestClient.get(Settings[:api][:url]+Settings[:api][:key]+Settings[:api][:currencies])
 
             response = response.body
             response_json= JSON.parse(response)
@@ -24,21 +24,15 @@ namespace :cron_tasks do
             puts response_json
             puts "API CALL WAS SUCCESSFUL AND REDIS IS UPDATED"
 
-        rescue Exception => exception
-            if exception.is_a?(RestClient::ExceptionWithResponse)
+        rescue RestClient::ExceptionWithResponse => exception
                 puts "RESTCLIENT EXCEPTION RESCUED WITH DETAILS"
+                puts exception
 
-            elsif exception.class==SocketError
-                puts "SITE CAN'T BE REACHED"
-               
-            else
+        rescue Exception => exception
                 puts "UNCHECKED EXCEPTION"
-                
-            end
-            puts exception
-        
-        end
-        
+                puts exception
+
+        end        
 
 
         
