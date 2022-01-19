@@ -2,7 +2,7 @@ module Errorhandler
 	extend ActiveSupport::Concern
 
 	included do
-		rescue_from StandardError, with: :show_errors
+		rescue_from Exception, with: :show_errors
 	end
 
 	def show_errors(exception)
