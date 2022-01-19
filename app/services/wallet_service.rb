@@ -1,7 +1,8 @@
 class WalletService
-    def add_money( wallet_id, amount )
+    def add_money(params)
 
-        @wallet = Wallet.find(wallet_id)
+        @wallet = Wallet.fetch_wallet(params[:user_id], params[:currency_type])
+        amount = params[:amount]
         amount = amount.to_d.round(AMOUNT_PRECISION)
         @wallet.update!(wallet_amount: @wallet.wallet_amount + amount)
         @wallet
