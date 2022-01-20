@@ -21,7 +21,7 @@ class WalletsController < ApplicationController
     end
 
     def add_money_to_wallet_params
-        params.permit(:user_id,:currency_type,:amount).merge(user_id: @user.id)
+        params.permit(:user_id,:currency_type,:amount).merge(user_id: @current_user.id)
     end
     
 end
